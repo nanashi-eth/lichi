@@ -21,12 +21,12 @@ output_dir = "./covers"
 os.makedirs(output_dir, exist_ok=True)
 
 # Leer el CSV con pandas
-df = pd.read_csv('./top2018.csv')
+df = pd.read_csv('./songs.csv')
 
 # Descargar imágenes para cada canción
 for index, row in df.iterrows():
-    title = row['name']
-    artist = row['artists']
+    title = row['song']
+    artist = row['artist']
     
     # Modificar la consulta para buscar imágenes con relación de aspecto 1:1 y que sean archivos JPG
     query = f"{title} {artist} album cover"
