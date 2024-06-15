@@ -1,0 +1,10 @@
+INSERT INTO "user" (first_name, last_name, username, password, profile_picture) VALUES ('Jose', 'Benitez', 'nanashi', '$2b$12$FjCQexUBDE9BXGs5CO92luffJcjz6GL0dM5wW21PHqououEQVmRyS', NULL);
+INSERT INTO "user" (first_name, last_name, username, password, profile_picture) VALUES ('Judit', 'Bort', 'kayriu', '$2b$12$WfeQYSrtWu01U23UkYBSNeXHc8gI5bcuhioxiHV/Mzvi/kQ8TSk5K', NULL);
+INSERT INTO "user" (first_name, last_name, username, password, profile_picture) VALUES ('Antonio', 'Guerrero', 'azen', '$2b$12$jpqJ3NztsmPlG5HqVNAjBeqwyk3kblY.uy80b.HPRnwCgjfl3qe1i', NULL);
+INSERT INTO "user" (first_name, last_name, username, password, profile_picture) VALUES ('Daniel', 'Rosales', 'sedani', '$2b$12$LCKZLBccIiR3saJal96qZedGVkLtXFI8KgzeGV1xFT1J3wQHY.owa', NULL);
+INSERT INTO "user" (first_name, last_name, username, password, profile_picture) VALUES ('Israel', 'Sanchez', 'kiwi', '$2b$12$bmuHxCQWf8Y6hTM1EsytnOqCu1nbSqMmzbv4DUNfJXO8UZhwJYPx6', NULL);
+INSERT INTO "user" (first_name, last_name, username, password, profile_picture) VALUES ('Jesus', 'Martinez', 'zarion', '$2b$12$YKxWvLIjekzyLOZr3huw5.d4rQByHOGpFebJ8Xp0EtH1GYCCaejGC', NULL);
+INSERT INTO "user" (first_name, last_name, username, password, profile_picture) VALUES ('Pablo', 'Rodriguez', 'pablorodri', '$2b$12$ABnik.uWmGvwZlOHnNZy9e5tIDWTw2P29cErCWeSdw5WwzNBFA95u', NULL);
+INSERT INTO "user" (first_name, last_name, username, password, profile_picture) VALUES ('Juan Antonio', 'Garcia', 'gamunito', '$2b$12$NxVEPtI7H8N0UQyeIUaGWOtSgb5F0isZLI8lAr0M7Bo2j/IELG686', NULL);
+INSERT INTO "user" (first_name, last_name, username, password, profile_picture) VALUES ('Grace', 'Taylor', 'grace_t', '$2b$12$CNv8Q2ozszB/rvYPwvc9Wu7ludZwPNGHL7Z/Gc8cpY7yckHqMrHNm', NULL);
+INSERT INTO "user" (first_name, last_name, username, password, profile_picture) VALUES ('Hank', 'Anderson', 'hank_a', '$2b$12$w66IhOl6RxpHGfSNFMB/nuHLFuQzA6f5FvOX5AKWbjVl07tugrCWq', NULL);
