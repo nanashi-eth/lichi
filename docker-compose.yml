@@ -1,6 +1,18 @@
 version: '2.27.0'
 services:
-    db:
+    # api:
+    #   container_name: api
+    #   image: nanashi/lichi-api:1.0
+    #   build: .
+    #   ports:
+    #     - 8080:8080
+    #   environment:
+    #     - DATABASE_URL=jdbc:postgresql://db:5432/${DB_NAME}
+    #     - DATABASE_USERNAME=${DB_USER}
+    #     - DATABASE_PASSWORD=${DB_PASSWORD}
+    #   depends_on:
+    #     - db
+    # db:
       image: postgres:latest
       container_name: db
       restart: always
@@ -12,18 +24,6 @@ services:
         POSTGRES_PASSWORD: ${DB_PASSWORD}
       volumes:
         - data:/var/lib/postgresql/data
+
 volumes:
     data: {}
-
-# api:
-#   container_name: api
-#   image: nanashi/lichi-api:1.0
-#   build: .
-#   ports:
-#     - 8080:8080
-#   environment:
-#     - DATABASE_URL=jdbc:postgresql://db:5432/${DB_NAME}
-#     - DATABASE_USERNAME=${DB_USER}
-#     - DATABASE_PASSWORD=${DB_PASSWORD}
-#   depends_on:
-#     - db
