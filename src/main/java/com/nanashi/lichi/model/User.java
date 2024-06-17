@@ -42,6 +42,9 @@ public class User implements UserDetails{
     @Enumerated(EnumType.STRING) 
     Role role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Playlist> playlists;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
