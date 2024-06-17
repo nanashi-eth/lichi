@@ -59,4 +59,11 @@ public class PlaylistService {
                 .name(playlist.getName())
                 .build();
     }
+
+    @Transactional(readOnly = true)
+    public Long getUserIdByPlaylistId(Long playlistId) {
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new RuntimeException("Playlist not found"));
+        return playlist.getUser().getUserId();
+    }
 }

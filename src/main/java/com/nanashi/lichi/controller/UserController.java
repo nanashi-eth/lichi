@@ -1,59 +1,92 @@
 package com.nanashi.lichi.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.nanashi.lichi.model.User;
 import com.nanashi.lichi.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
+@RequiredArgsConstructor
 @CrossOrigin(origins = {"http://localhost:4200"})
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @GetMapping
-    public List<User> getUsers() {
-        return userRepository.findAll();
-    }
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userRepository.findById(id).get();
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User requestedUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Long authenticatedUserId = getAuthenticatedUserId();
+        if (!id.equals(authenticatedUserId)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        return ResponseEntity.ok(requestedUser);
     }
 
     @PostMapping
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        // Ensure username uniqueness or handle duplicates as needed
+        User existingUser = userRepository.findByUsername(user.getUsername()).orElse(null);
+        if (existingUser != null) {
+            return ResponseEntity.badRequest().body(null); // Handle username already exists
+        }
+
+        // Encrypt password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        User savedUser = userRepository.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, User user) {
-        User existUser = userRepository.findById(id).get();
-        existUser.setUsername(user.getUsername());
-        existUser.setPassword(user.getPassword());
-        return userRepository.save(existUser);
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Long authenticatedUserId = getAuthenticatedUserId();
+        if (!id.equals(authenticatedUserId)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        existingUser.setUsername(user.getUsername());
+        existingUser.setPassword(passwordEncoder.encode(user.getPassword())); // Encrypt new password
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setProfilePicture(user.getProfilePicture());
+
+        User updatedUser = userRepository.save(existingUser);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id) {
-        try {
-            userRepository.deleteById(id);
-            return "User deleted successfully.";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Error deleting user.";
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Long authenticatedUserId = getAuthenticatedUserId();
+        if (!id.equals(authenticatedUserId)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+
+        userRepository.deleteById(id);
+        return ResponseEntity.ok("User deleted successfully.");
+    }
+
+    private Long getAuthenticatedUserId() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+        User authenticatedUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Authenticated user not found"));
+
+        return authenticatedUser.getUserId();
     }
 }
