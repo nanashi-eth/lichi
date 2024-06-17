@@ -10,6 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.nanashi.lichi.jwt.CustomAuthenticationEntryPoint;
 import com.nanashi.lichi.jwt.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,8 @@ public class SecurityConfig {
             .sessionManagement(sessionManager->
                 sessionManager 
                   .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .exceptionHandling(exception -> exception
+                  .authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
             .authenticationProvider(authProvider)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
