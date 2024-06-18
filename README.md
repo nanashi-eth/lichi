@@ -45,7 +45,7 @@ cors.allowed-origins=http://localhost:4200
 logging.level.root=INFO
 logging.level.com.nanashi.lichi=DEBUG
 logging.file.name=logs/lichi.log
-
+```
 
 
 BD Schema
