@@ -47,14 +47,37 @@ logging.level.com.nanashi.lichi=DEBUG
 logging.file.name=logs/lichi.log
 ```
 
+## Endpoints Principales
+
+### Autenticación
+
+- `POST /auth/login`: Autentica un usuario y retorna un JWT.
+- `POST /auth/register`: Crea un nuevo usuario y retorna un JWT.
+
+### Usuarios
+
+- `GET api/users`: Obtiene todos los usuarios.
+- `PUT /users/{id}`: Actualiza un usuario existente.
+- `DELETE /users/{id}`: Elimina un usuario.
+
+### Música
+
+- `GET /api/songs`: Obtiene todas las canciones (si has inciado sesion).
+- `GET /api/playlists/user/{userId}`: Obtiene todas las playlists del usuario registrado.
+- `GET /api/playlists/{playlistId}/songs`: Obtiene todas las canciones de la playlist.
+- `POST /api/playlists/user/{userId}`: Crea una nueva playlist.
+- `GET api/songs/search`: Obtiene todas las canciones que cumplen el filtro que se le pasa como parametro.
+- `DELETE /api/playlists/{playlistId}`: Elimina una playlist.
 
 BD Schema
 ![ERDiagram](https://github.com/nanashi-eth/lichi/assets/148278933/76725e40-a39b-41e6-93b0-2c1c1586c1d7)
 
 ## Documentación
-Documentación de Spring Boot
-Documentación de Spring Security
-Documentación de JWT
-Documentación de PostgreSQL
-Documentación de Docker
-Documentación de Docker Compose
+
+- [Documentación de Spring Boot](https://spring.io/projects/spring-boot)
+- [Documentación de Spring Security](https://spring.io/projects/spring-security)
+- [Documentación de JWT](https://jwt.io/introduction/)
+- [Documentación de PostgreSQL](https://www.postgresql.org/docs/)
+- [Documentación de Docker](https://docs.docker.com/)
+- [Documentación de Docker Compose](https://docs.docker.com/compose/)
+
