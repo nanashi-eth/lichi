@@ -3,10 +3,13 @@ package com.nanashi.lichi.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nanashi.lichi.model.Song;
@@ -22,8 +25,8 @@ public class SongController {
 
     @GetMapping
     @PreAuthorize("hasRole('USER')")
-    public List<Song> getAllSongs() {
-        return songService.getAllSongs();
+    public Page<Song> getAllSongs(@RequestParam(defaultValue = "0") int page,
+                                  @RequestParam(defaultValue = "100") int size) {
+        return songService.getAllSongs(PageRequest.of(page, size));
     }
 }
-
