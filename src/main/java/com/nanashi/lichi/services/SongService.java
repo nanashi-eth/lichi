@@ -1,7 +1,5 @@
 package com.nanashi.lichi.services;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,5 +17,8 @@ public class SongService {
     public Page<Song> getAllSongs(PageRequest pageable) {
         return songRepository.findAll(pageable);
     }
-}
 
+    public Page<Song> searchSongs(String keyword, PageRequest pageable) {
+        return songRepository.searchByKeyword(keyword, pageable);
+    }
+}
